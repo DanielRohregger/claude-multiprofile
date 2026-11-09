@@ -17,6 +17,7 @@ import { rename } from "./commands/rename.js";
 import { repair } from "./commands/repair.js";
 import { selfUpdate } from "./commands/selfupdate.js";
 import { status } from "./commands/status.js";
+import { ui } from "./commands/ui.js";
 import { upgrade } from "./commands/upgrade.js";
 import { err, info, command } from "./util.js";
 import { getRegistry } from "./registry.js";
@@ -56,6 +57,9 @@ COMMANDS
   self-update [name] [on|off]
                          Whether a profile's copy of Claude updates itself
                          (off by default: its launcher keeps it current)
+  ui [--port <n>] [--no-open]
+                         Open a local web UI to set up, launch and manage
+                         profiles in the browser (Ctrl+C to stop)
   upgrade [--no-fix]     Upgrade to the latest version on npm, then apply its
                          changes to your profiles (--no-fix: install only)
   help                   Show this help
@@ -85,6 +89,7 @@ async function pickCommand() {
   return select({
     message: "What would you like to do?",
     choices: [
+      { name: "ui           Open the web UI in your browser", value: "ui" },
       { name: "add          Create a new profile (interactive wizard)", value: "add" },
       { name: "list         List configured profiles", value: "list" },
       { name: "status       Health-check all profiles", value: "status" },
@@ -98,7 +103,7 @@ async function pickCommand() {
       { name: "help         Show full help text", value: "help" },
       { name: "exit", value: "exit" },
     ],
-    pageSize: 13,
+    pageSize: 14,
   });
 }
 
@@ -155,7 +160,7 @@ export async function run(argv) {
 
   if (argv[0]) remindIfFixesPending(cmd);
 
-  const handlers = { add, list, status, doctor, extensions, rename, repair, remove, upgrade, "self-update": selfUpdate };
+  const handlers = { add, list, status, doctor, extensions, rename, repair, remove, upgrade, ui, "self-update": selfUpdate };
   const handler = handlers[cmd];
   if (!handler) {
     err(`Unknown command: ${cmd}`);

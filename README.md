@@ -76,6 +76,8 @@ The wizard walks you through every choice, explains what each step does, and let
 
 After it finishes, you'll have a new launcher .app on your Dock (for Desktop) and a new shell alias like `claude-work` (for Code). Sign in once on each, and you're done.
 
+Prefer clicking to typing? `claude-multiprofile ui` opens the same wizard and everything else in your browser. See [`claude-multiprofile ui`](#claude-multiprofile-ui---port-n---no-open).
+
 ## What gets created
 
 For a profile named `work`, with both Desktop and Code targets, the tool creates:
@@ -302,6 +304,19 @@ Upgrades to the latest version on npm and applies its changes to your profiles, 
 It installs the exact version it found (not `@latest`, which npm can answer from a stale cache in the minutes after a release) and then checks what actually landed. If npm installed an older version, it says so and asks you to retry in a minute. If the new version landed in a different Node version's folder than the one your shell uses (common with nvm), it says that instead, and applies nothing until PATH is sorted. When everything checks out, it runs the new version's `doctor --fix`, so launchers, the launch helper and profile settings are brought up to date. `--no-fix` stops after the install.
 
 If you are already on the latest version but its changes were never applied (for example, you upgraded with plain `npm install -g`), `upgrade` applies them.
+
+### `claude-multiprofile ui [--port <n>] [--no-open]`
+
+Opens a small web UI in your browser for setting up and using profiles:
+
+- a "Getting started" checklist (Claude Desktop installed, `claude` on PATH, first profile, first sign-in);
+- a card per profile with **Open** (Desktop) and **Open in Terminal** (Code) buttons, the commands to copy, and Rename, Repair launcher, Self-update and Remove;
+- your default install and the `claude` binary in use;
+- buttons for `status`, `doctor`, `doctor --fix`, `doctor --undo`, `extensions` and `upgrade`, plus a banner when changes from an upgrade are waiting to be applied.
+
+Every button runs the real command, unchanged. Its questions appear as forms in the browser and its output as a log, so the UI can do exactly what the terminal can and nothing else.
+
+The server listens on `127.0.0.1` only, and every request needs the random token in the link it prints, so other machines and other web pages cannot use it. It runs until you press Ctrl+C. `--port` picks a fixed port (the default is a free one); `--no-open` prints the link without opening a browser. Needs Node 18.19 or newer; the other commands don't.
 
 ### `claude-multiprofile help` / `--version`
 

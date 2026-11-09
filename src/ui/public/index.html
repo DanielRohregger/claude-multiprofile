@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>claude-multiprofile</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">✳</span>
+      <div>
+        <h1>claude-multiprofile</h1>
+        <p class="sub">Run several Claude accounts side by side</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span id="version" class="pill"></span>
+      <button id="refresh" class="ghost" type="button" title="Reload the overview">↻ Refresh</button>
+    </div>
+  </header>
+
+  <main id="main">
+    <div id="banners"></div>
+
+    <section id="setup" class="card" hidden>
+      <h2>Getting started</h2>
+      <ol id="checklist" class="checklist"></ol>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Profiles</h2>
+        <button id="add-profile" type="button" class="primary">+ Add profile</button>
+      </div>
+      <div id="profiles" class="grid"></div>
+    </section>
+
+    <section class="two-col">
+      <div class="card">
+        <h2>Your default Claude</h2>
+        <p class="muted small">Your existing install. This tool never changes it.</p>
+        <dl id="defaults" class="kv"></dl>
+      </div>
+      <div class="card">
+        <h2>Maintenance</h2>
+        <p class="muted small">Each button runs the matching <code>claude-multiprofile</code> command. Questions show up here.</p>
+        <div class="tools">
+          <button type="button" data-run="status">Status</button>
+          <button type="button" data-run="doctor">Doctor</button>
+          <button type="button" data-run="doctor --fix">Doctor --fix</button>
+          <button type="button" data-run="doctor --undo">Undo last fix</button>
+          <button type="button" data-run="extensions">Copy extensions</button>
+          <button type="button" data-run="self-update">Update settings</button>
+          <button type="button" data-run="upgrade">Upgrade tool</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="job" class="overlay" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="job-title">
+      <div class="dialog-head">
+        <h2 id="job-title"></h2>
+        <span id="job-status" class="pill"></span>
+      </div>
+      <pre id="job-log" class="log" aria-live="polite"></pre>
+      <form id="prompt" class="prompt" hidden></form>
+      <div class="dialog-foot">
+        <button id="job-cancel" type="button" class="ghost">Cancel</button>
+        <button id="job-close" type="button" class="primary" hidden>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

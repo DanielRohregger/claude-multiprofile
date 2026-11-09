@@ -3,6 +3,19 @@
 All notable changes to claude-multiprofile. Versions follow semver; the
 project is pre-1.0, so minor breakage may occur between 0.x releases.
 
+## Unreleased
+
+### Added
+
+- **`claude-multiprofile ui` opens a local web UI.** Profiles show as cards
+  with buttons to open them, copy their commands, rename, repair, toggle
+  self-update and remove them. A "Getting started" checklist and buttons for
+  `status`, `doctor`, `extensions` and `upgrade` are included. Each button runs
+  the real command; its questions are shown as browser forms through a
+  module hook that stands in for `@inquirer/prompts`, so no command changed.
+  The server binds to 127.0.0.1, requires a per-run token, and adds no
+  dependencies.
+
 ## 0.1.39 (2026-11-02)
 
 ### Fixed
